@@ -37,3 +37,13 @@ body {
     text-align: center !important;
     border-radius: 10rem !important;
 }
+
+/* .NEXT {
+  display: none !important;
+} */
+
+.page,.score {
+  color:white !important;
+  font-weight: bold !important;
+  font-size: 4rem !important;
+}

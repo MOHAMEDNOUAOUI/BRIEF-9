@@ -70,7 +70,7 @@ timestamp.textContent = count;
             xml.open('POST', './fetch_questions.php');
             xml.send();
         }
-    },1000);
+    },);
 
 }
 
@@ -97,12 +97,46 @@ radioButtons.forEach(function(radioButton) {
                 rb.checked = false;
             }
         });
+        
     });
 });
 
-function answerid ($id) {
-    console.log($id)
+function answerid(id) {
+    var nextButton = document.getElementsByClassName('NEXT');
+    var question = document.querySelector('.question');
+    var idquestion = question.getAttribute('data-key');
+    var answers = document.querySelectorAll('.answer-radio');
+    var id = '';
+    answers.forEach(ans => {
+        if (ans.checked) {
+            id = ans.value;
+        }
+    });
+    console.log("answer = " +id);
+    console.log("question =" + idquestion);
+
+
+
+    let xhm = new XMLHttpRequest;
+
+    xhm.onload = function () {
+        if(this.readyState ==4 && this.status == 200) {
+            container.innerHTML = this.responseText;
+            setTimeout(() => {  
+
+                send_ajax_fetch_question();
+
+             }, 5000);
+        }
+    }
+    xhm.open('POST' , '../CONTROLER/QUESTION_ANSWER.php');
+    xhm.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    xhm.send("useranswer=" + encodeURIComponent(id) + "&question=" + encodeURIComponent(idquestion));
 }
+
+
+
+
 
 
 

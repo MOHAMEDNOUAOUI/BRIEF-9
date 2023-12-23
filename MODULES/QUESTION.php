@@ -15,6 +15,8 @@ class QUESTION {
 
     private $question_theme;
 
+    private $correct_answer;
+
 
 
     public function __construct() {
@@ -56,8 +58,28 @@ class QUESTION {
         return $this->question_theme;
     }
 
+    public function setCorrect_Answer($correctanswer) {
+        $this->correct_answer = $correctanswer;
+    }
+
+    public function getCorrect_Answer () {
+        return $this->correct_answer;
+    }
+
+
+    public function set_question_correction_by_question_id () {
+        $fetch = $this->db->prepare("SELECT * FROM questions WHERE question_id = :questionid");
+        $fetch->bindValue(':questionid' , $this->get_QuestionID() , PDO::PARAM_INT);
+        $fetch->execute();
+        $result = $fetch->fetch(PDO::FETCH_ASSOC);
+        $this->setCorrect_Answer($result['Correct_Answer']);
+    }
+
+
+    
+
     public function fetch_questions_random() {
-        $fetch = $this->db->query("SELECT * FROM questions JOIN theme ON theme.theme_id = questions.question_theme ORDER BY RAND()");
+            $fetch = $this->db->query("SELECT * FROM questions JOIN theme ON theme.theme_id = questions.question_theme");
             $result = $fetch->fetchALL(PDO::FETCH_ASSOC);
             $questions = [];
 
@@ -67,12 +89,15 @@ class QUESTION {
             $question->set_QuestionTEXT($row['question_text']);
             $question->setQuestionDescription($row['question_description']);
             $question->setQuestionTheme($row['question_theme']);
+            $question->setCorrect_Answer($row['Correct_Answer']);
             $questions [] = $question;
+            shuffle($questions);
             }
             return $questions;   
     }
 
 }
+
 ?>
 
 

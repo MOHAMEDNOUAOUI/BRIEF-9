@@ -14,9 +14,9 @@ require '../CONTROLER/SCORE_CONTROLER.php';
 </head>
 <body>
   <div class="videocontainer">
-    <video autoplay loop muted plays-inline type="video/mp4" controls class="background-video">
+    <!-- <video autoplay loop muted plays-inline type="video/mp4" controls class="background-video">
       <source src="./IMGS/Sea of Stars - PlayStation Demo Now Available!.mp4">
-    </video>
+    </video> -->
   </div>
   <main class="main d-flex position-relative justify-content-center align-items-center">
     <div class="reply border border-3 border-black w-50 h-50 d-flex position-relative">

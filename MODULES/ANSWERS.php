@@ -5,7 +5,6 @@ class ANSWERS {
     private $Answer_id;
     private $Answer_text;
     private $Answer_points;
-    private $Answer_Status;
     private $Question_id;
 
     public function __construct() {
@@ -25,9 +24,6 @@ class ANSWERS {
         $this->Answer_points = $points;
     }
 
-    public function setAnswerStatus($status) {
-        $this->Answer_Status = $status;
-    }
 
     public function setQuestionID ($questionID) {
         $this->Question_id = $questionID;
@@ -46,17 +42,23 @@ class ANSWERS {
         return $this->Answer_points;
     }
 
-    public function getAnswerStatus() {
-        return $this->Answer_Status;
-    }
 
     public function getQuestionID () {
         return $this->Question_id;
     }
 
-    public function fetch_reponse_for_question ($new) {
+    public function set_response_for_question() {
+        $fetch = $this->db->prepare("SELECT answer_text FROM answers WHERE question_id = :Q_id LIMIT 1");
+        $fetch->bindValue(':Q_id', $this->getQuestionID(), PDO::PARAM_INT);
+        $fetch->execute();
+        $result = $fetch->fetch(PDO::FETCH_ASSOC);
+        $this->setAnswerText($result['answer_text']);
+    }
+    
+
+    public function fetch_reponse_for_question ($question_id) {
         $fetch = $this->db->prepare("SELECT * FROM answers WHERE question_id = :Q_id");
-        $fetch->bindValue(':Q_id' , $new,PDO::PARAM_INT);
+        $fetch->bindValue(':Q_id' , $question_id,PDO::PARAM_INT);
         $fetch->execute();
         $result = $fetch->fetchAll(PDO::FETCH_ASSOC);
         $answers = [];
@@ -64,7 +66,6 @@ class ANSWERS {
             $answer = new ANSWERS();
             $answer->setAnswerId($reponse['answer_id']);
             $answer->setAnswerText($reponse['answer_text']);
-            $answer->setAnswerStatus($reponse['answer_status']);
             $answer->setQuestionID($reponse['question_id']);
             $answers [] = $answer;
         }
