@@ -1,0 +1,39 @@
+body {
+    overflow: hidden;
+}
+
+.main {
+    background-color: rgba(0, 0, 0, 0.6);
+    height:100vh !important;
+}
+
+.QUIZZ {
+    top: -1rem;
+    left: 1rem;
+    background-color: red;
+}
+
+.videocontainer {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+
+  .reply {
+    background-color: rgba(53, 67, 74, 0.8);
+  }
+
+  .timer {
+    font-size: 10rem !important;
+    color: white !important;
+    background-color: red !important;
+    padding-right: 5rem !important;
+    padding-left: 5rem !important;
+    text-align: center !important;
+    border-radius: 10rem !important;
+}
